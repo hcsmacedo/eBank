@@ -19,19 +19,25 @@ namespace eBank.Infra.CrossCutting.IOC
             #region IOC Application
 
             builder.RegisterType<BusinessServiceManagementBank>().As<IBusinessServiceManagementBank>();
-            
+            builder.RegisterType<BusinessServiceManagementAccount>().As<IBusinessServiceManagementAccount>();
+            builder.RegisterType<BusinessServiceManagementOwner>().As<IBusinessServiceManagementOwner>();
+
             #endregion
 
             #region IOC Services
 
             builder.RegisterType<ServiceBank>().As<IServiceBank>();
-            
+            builder.RegisterType<ServiceAccount>().As<IServiceAccount>();
+            builder.RegisterType<ServiceOwner>().As<IServiceOwner>();
+
             #endregion
 
             #region IOC Repositorys SQL
 
             builder.RegisterType<RepositoryBank>().As<IRepositoryBank>();
-            
+            builder.RegisterType<RepositoryAccount>().As<IRepositoryAccount>();
+            builder.RegisterType<RepositoryOwner>().As<IRepositoryOwner>();
+
             #endregion
 
             #region IOC Mapper
@@ -46,7 +52,21 @@ namespace eBank.Infra.CrossCutting.IOC
                 cfg.CreateMap<List<Bank>, List<BankDTO>>();
                 #endregion
 
-                
+                #region Account
+                cfg.CreateMap<Account, AccountDTO>();
+                cfg.CreateMap<AccountDTO, Account>();
+                cfg.CreateMap<List<AccountDTO>, List<Account>>();
+                cfg.CreateMap<List<Account>, List<AccountDTO>>();
+                #endregion
+
+                #region Owner
+                cfg.CreateMap<Owner, OwnerDTO>();
+                cfg.CreateMap<OwnerDTO, Owner>();
+                cfg.CreateMap<List<OwnerDTO>, List<Owner>>();
+                cfg.CreateMap<List<Owner>, List<OwnerDTO>>();
+                #endregion
+
+
             })).AsSelf().SingleInstance();
 
             builder.Register(c =>

@@ -5,39 +5,38 @@ using System;
 
 namespace eBank.Infra.Data.EntityConfig
 {
-    public class BankMap : IEntityTypeConfiguration<Bank>
+    public class OwnerMap : IEntityTypeConfiguration<Owner>
     {
-        public void Configure(EntityTypeBuilder<Bank> builder)
+        public void Configure(EntityTypeBuilder<Owner> builder)
         {
-            builder.ToTable("Bank");
+            builder.ToTable("Owner");
             builder.HasKey(x => x.Id);
-            builder.Property(p => p.Name).IsRequired();
-            builder.Property(p => p.BankCode).IsRequired();
-            builder.Property(p => p.BankCode).HasMaxLength(3).IsFixedLength();
+            builder.Property(p => p.OwnerName).IsRequired();
+            builder.Property(p => p.OwnerDocument).IsRequired();
             builder.Property(p => p.Active).IsRequired();
 
             builder.HasData(
-                new Bank
+                new Owner
                 {
                     Id = 1,
-                    BankCode = "001",
-                    Name = "Banco do Brasil",                    
+                    OwnerName = "Heitor Macêdo",
+                    OwnerDocument = "10203040570",
                     Active = true,
                     RegistrationDate = DateTime.Now
                 },
-                new Bank
+                new Owner
                 {
                     Id = 2,
-                    BankCode = "237",
-                    Name = "Bradesco",
+                    OwnerName = "João Santos",
+                    OwnerDocument = "25337111019",
                     Active = true,
                     RegistrationDate = DateTime.Now
                 },
-                new Bank
+                new Owner
                 {
                     Id = 3,
-                    BankCode = "077",
-                    Name = "Inter",
+                    OwnerName = "Maria Tavares",
+                    OwnerDocument = "76788265089",
                     Active = true,
                     RegistrationDate = DateTime.Now
                 }

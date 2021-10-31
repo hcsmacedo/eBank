@@ -5,18 +5,18 @@ using System;
 using System.Threading.Tasks;
 using System.Net;
 
-namespace eBank.BankAPI.Controllers
+namespace eBank.AccountAPI.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
 
-    public class BankController : ControllerBase
+    public class AccountController : ControllerBase
     {
-        private readonly IBusinessServiceManagementBank _businessServiceManagementBank;
+        private readonly IBusinessServiceManagementAccount _businessServiceManagementAccount;
 
-        public BankController(IBusinessServiceManagementBank businessServiceManagementBank)
+        public AccountController(IBusinessServiceManagementAccount businessServiceManagementAccount)
         {
-            _businessServiceManagementBank = businessServiceManagementBank;
+            _businessServiceManagementAccount = businessServiceManagementAccount;
         }
 
         [HttpGet]
@@ -24,7 +24,7 @@ namespace eBank.BankAPI.Controllers
         {
             try
             {
-                var result = await _businessServiceManagementBank.GetAll();
+                var result = await _businessServiceManagementAccount.GetAll();
                 if (result == null)
                     return NotFound();
 
@@ -42,7 +42,7 @@ namespace eBank.BankAPI.Controllers
         {
             try
             {
-                var result = await _businessServiceManagementBank.GetById(id);
+                var result = await _businessServiceManagementAccount.GetById(id);
                 if (result == null)
                     return NotFound();
 
@@ -55,13 +55,13 @@ namespace eBank.BankAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] BankDTO Bank)
+        public async Task<ActionResult> Post([FromBody] AccountDTO Account)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var result = await _businessServiceManagementBank.Add(Bank);
+                    var result = await _businessServiceManagementAccount.Add(Account);
                     if (result == false)
                         return BadRequest();
 
@@ -85,7 +85,7 @@ namespace eBank.BankAPI.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                var result = await _businessServiceManagementBank.Remove(id);
+                var result = await _businessServiceManagementAccount.Remove(id);
                 if (result == false)
                     return BadRequest();
 
@@ -99,14 +99,14 @@ namespace eBank.BankAPI.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<ActionResult> Update(int? id,[FromBody] BankDTO Bank)
+        public async Task<ActionResult> Update(int? id, [FromBody] AccountDTO Account)
         {
             try
             {
                 if (!ModelState.IsValid || !id.HasValue || id == 0)
                     return BadRequest(ModelState);
 
-                var result = await _businessServiceManagementBank.Update((int)id, Bank);
+                var result = await _businessServiceManagementAccount.Update((int)id, Account);
                 if (result == false)
                     return BadRequest();
 

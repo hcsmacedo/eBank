@@ -11,7 +11,9 @@ namespace eBank.Infra.Data
     {
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
 
-        public DbSet<Bank> Bank { get; set; }
+        public DbSet<Bank> bank { get; set; }
+        public DbSet<Bank> account { get; set; }
+        public DbSet<Owner> owner { get; set; }
 
         public async Task<int> SaveChangesAsync()
         {
@@ -34,6 +36,8 @@ namespace eBank.Infra.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new BankMap());
+            modelBuilder.ApplyConfiguration(new AccountMap());
+            modelBuilder.ApplyConfiguration(new OwnerMap());
         }
     }
 }
