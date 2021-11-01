@@ -4,6 +4,7 @@ namespace eBank.Business.DTO.DTO
 {
     public class BankDTO
     {
+        public int? Id { get; set; }
         [Required(ErrorMessage = "O campo 'Nome' é obrigatório.")]
         public string Name { get; set; }
         [Required(ErrorMessage = "O campo 'Código do Banco' é obrigatório.")]

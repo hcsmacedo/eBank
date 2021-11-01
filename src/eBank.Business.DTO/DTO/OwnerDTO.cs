@@ -4,6 +4,7 @@ namespace eBank.Business.DTO.DTO
 {
     public class OwnerDTO
     {
+        public int? Id { get; set; }
         [Required(ErrorMessage = "O campo 'Titular' é obrigatório.")]
         public string OwnerName { get; set; }
 
