@@ -1,7 +1,6 @@
 ﻿using eBank.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
 
 namespace eBank.Infra.Data.EntityConfig
 {
