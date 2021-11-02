@@ -20,23 +20,15 @@ namespace eBank.Infra.Data.EntityConfig
                 {
                     Id = 1,
                     OwnerName = "Heitor Macêdo",
-                    OwnerDocument = "10203040570",
+                    OwnerDocument = "369.135.230-84",
                     Active = true,
                     RegistrationDate = DateTime.Now
                 },
                 new Owner
                 {
                     Id = 2,
-                    OwnerName = "João Santos",
-                    OwnerDocument = "25337111019",
-                    Active = true,
-                    RegistrationDate = DateTime.Now
-                },
-                new Owner
-                {
-                    Id = 3,
-                    OwnerName = "Maria Tavares",
-                    OwnerDocument = "76788265089",
+                    OwnerName = "ING8 Tecnologia da Informação",
+                    OwnerDocument = "74.712.796/0001-41",
                     Active = true,
                     RegistrationDate = DateTime.Now
                 }
