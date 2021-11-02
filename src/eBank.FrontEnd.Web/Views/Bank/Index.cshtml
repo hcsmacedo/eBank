@@ -63,7 +63,7 @@
                     </div>
                     <div class="modal-footer">
                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
-                        <input type="button" class="btn btn-success" value="Cadastrar" onclick="New()">
+                        <input type="submit" class="btn btn-success" value="Cadastrar">
                     </div>
                 </form>
             </div>
@@ -99,6 +99,7 @@
                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">                        
                         <span id='editButton'></span>
                     </div>
+                    <input type="hidden" id="idEditParam" />
                 </form>
             </div>
         </div>
@@ -130,15 +131,25 @@
             GetAllBanks();
         });
 
+        $('#formEditData').on('submit', function (e) {
+            e.preventDefault();
+            Edit($("#idEditParam").val());
+        });
+
+        $('#formAddData').on('submit', function (e) {
+            e.preventDefault();
+            New();
+        });
+
         function EditModal(id) {
             $("#dvAlert").empty();
             $('#editData').modal();
-            $('#editButton').html('<input type="button" onclick="Edit(' + id + ')" class="btn btn-warning" value="Atualizar">');
+            $('#editButton').html('<input type="submit" class="btn btn-warning" value="Atualizar">');
+            $('#idEditParam').val(id);
 
             if (id > 0) {
 
                 $.getJSON("/Bank/GetBankById?BankId=" + id, function (data) {
-                    console.log("data --> " + JSON.stringify(data));
                     $("#txtEditBankCode").val(data.bankCode);
                     $("#txtEditBankName").val(data.name);
                     $('#selEditBankActive').val(data.active === true ? 'true' :'false');
@@ -418,34 +429,6 @@
             }
         }
 
-        $("#btnSave").click(function () {
-            var oBank = {
-                BankCode: $("#txtEditBanckCode").val(),
-                Name: $("#txtEditBanckName").val(),
-                Active: $('select[name=selEditBanckActive] option').filter(':selected').val()
-            };           
-            
-            $.post("/Bank/AddBank", oBank)
-                .done(function (data, textStatus, xhr) {
-
-                    var result = JSON.parse(data);
-
-                    if (result === true | result.status === 200) {
-                        mountMsg("success", "Sucesso", "Dado cadastrado com sucesso!");
-                        GetAllBanks();
-                    } else {
-                        var err = JSON.stringify(result.errors);
-                        mountMsg("danger", "Erro", err);
-                    }
-                }).fail(function (jqXHR, textStatus, errorThrown) {
-                    var err = textStatus + " (Delete) ," + errorThrown;
-                    mountMsg("danger", "Erro", err);
-                }).always(function () {
-                    $("#formAddData").trigger("reset");
-                    $('#addData').modal('toggle');
-                });
-        });
-
         function New() {
             
             var oBank = {
@@ -453,8 +436,6 @@
                 Name: $("#txtNewBankName").val(),
                 Active: $('select[name=selNewBankActive] option').filter(':selected').val()
             };
-
-            console.log(JSON.stringify(oBank));
 
             $.ajax({
                 url: '/Bank/AddBank',
@@ -478,6 +459,7 @@
                 var err = errorThrown;
                 mountMsg("danger", "Erro", err);
             }).always(function () {
+                $("#formAddData").trigger("reset");
                 $('#addData').modal('toggle');
             });;
         }
