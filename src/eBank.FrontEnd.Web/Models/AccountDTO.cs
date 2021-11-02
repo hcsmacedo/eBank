@@ -1,20 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace eBank.Domain.Models
+﻿
+namespace eBank.FrontEnd.Web.Models
 {
-    public class Account : BaseEntity
+    public class AccountDTO
     {
+        public int? Id { get; set; }
+        
         public int BankId { get; set; }
 
         public string BranchNumber { get; set; }
 
         public string AccountNumber { get; set; }
-        
+
         public int OwnerId { get; set; }
 
         public bool Active { get; set; }
 
+        public BankDTO Bank { get; set; }
+
+        public OwnerDTO Owner { get; set; }
     }
 }

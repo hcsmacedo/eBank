@@ -10,7 +10,7 @@ namespace eBank.Business.DTO.DTO
         public int BankId { get; set; }
 
         [Required(ErrorMessage = "O campo 'Número da Agência' é obrigatório.")]
-        public int BranchNumber { get; set; }
+        public string BranchNumber { get; set; }
 
         [Required(ErrorMessage = "O campo 'Número da Conta' é obrigatório.")]
         public string AccountNumber { get; set; }

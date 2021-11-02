@@ -1,9 +1,9 @@
 ﻿@{
-    ViewBag.Title = "Bank";
+    ViewBag.Title = "Account";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<a href="https://localhost:44368/swagger/index.html">Contratos (Bank)</a>
+<a href="https://localhost:44327/swagger/index.html">Contratos (Account)</a>
 
 <div class="container-xl">
     <div class="table-responsive">
@@ -11,21 +11,23 @@
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h2>Gestão</b></h2>
+                        <h2>Gestão de Contas Bancárias</b></h2>
                     </div>
                     <div class="col-sm-6">
                         <a href="#addData" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Adicionar</span></a>
                     </div>
                     <div id="dvAlert"></div>
                 </div>
-            </div>                
-            <table id="tblBank" class="table table-striped table-hover">
+            </div>
+            <table id="tblAccount" class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Código</th>
-                        <th>Nome</th>
-                        <th>Ativo?</th>
+                        <th>Código do Banco</th>
+                        <th>Banco</th>
+                        <th>Agência</th>
+                        <th>Número da Conta</th>
+                        <th>Titular</th>
+                        <th>Situação</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -40,21 +42,33 @@
         <div class="modal-content">
             <form id="formAddData">
                 <div class="modal-header">
-                    <h4 class="modal-title">Cadastrar</h4>
+                    <h4 class="modal-title">Cadastrar Conta Bancária</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="txtNewBankName" class="col-form-label">Nome</label>
-                        <input type="text" id="txtNewBankName" class="form-control" required>
+                        <label>Banco</label>
+                        <select id="selNewBank" name="selNewBank" class="form-control" required>
+                            <option value="" selected>Selecione..</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label for="txtNewBankCode">Código</label>
-                        <input type="text" id="txtNewBankCode" class="form-control" required>
+                        <label for="txtNewBranchNumber" class="col-form-label">Agência</label>
+                        <input type="text" id="txtNewBranchNumber" class="form-control" required>
+                    </div>                    
+                    <div class="form-group">
+                        <label for="txtNewAccountNumber" class="col-form-label">Conta</label>
+                        <input type="text" id="txtNewAccountNumber" class="form-control" required data-bind="value:replyNumber">
+                    </div>
+                    <div class="form-group">
+                        <label>Titular</label>
+                        <select id="selNewOwner" name="selNewOwner" class="form-control" required>
+                            <option value="" selected>Selecione..</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Ativo?</label>
-                        <select id="selNewBankActive" name="selNewBankActive" class="form-control">
+                        <select id="selNewAccountActive" name="selNewAccountActive" class="form-control">
                             <option value="true" selected>Sim</option>
                             <option value="false">Não</option>
                         </select>
@@ -74,28 +88,40 @@
         <div class="modal-content">
             <form id="formEditData">
                 <div class="modal-header">
-                    <h4 class="modal-title">Editar</h4>
+                    <h4 class="modal-title">Atualizar Conta Bancária</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="txtEditBankName">Nome</label>
-                        <input type="text" id="txtEditBankName" class="form-control" required>
+                        <label>Banco</label>
+                        <select id="selEditBank" name="selEditBank" class="form-control" required>
+                            <option value="" selected>Selecione..</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label for="txtEditBankCode">Código</label>
-                        <input type="text" id="txtEditBankCode" class="form-control" required>
+                        <label for="txtEditBranchNumber" class="col-form-label">Agência</label>
+                        <input type="text" id="txtEditBranchNumber" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtEditAccountNumber" class="col-form-label">Conta</label>
+                        <input type="text" id="txtEditAccountNumber" class="form-control" required data-bind="value:replyNumber">
+                    </div>
+                    <div class="form-group">
+                        <label>Titular</label>
+                        <select id="selEditOwner" name="selEditOwner" class="form-control" required>
+                            <option value="" selected>Selecione..</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Ativo?</label>
-                        <select id="selEditBankActive" name="selEditBankActive" class="form-control">
-                            <option value="true">Sim</option>
+                        <select id="selEditAccountActive" name="selEditAccountActive" class="form-control">
+                            <option value="true" selected>Sim</option>
                             <option value="false">Não</option>
                         </select>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">                        
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
                     <span id='editButton'></span>
                 </div>
                 <input type="hidden" id="idEditParam" />
@@ -117,7 +143,7 @@
                     <p class="text-warning"><small>Essa ação não pode ser desfeita.</small></p>
                 </div>
                 <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">                        
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
                     <span id='deleteButton'></span>
                 </div>
             </form>
@@ -127,8 +153,50 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        GetAllBanks();
+        MakeAllBox();
+        GetAllAccounts();
     });
+
+    function MakeAllBox() {
+
+        $.getJSON("/Bank/GetAllBanks", function (banks) {
+
+            $.map(banks, function (bank) {
+                if (bank.active) {
+                    $('#selNewBank').append(new Option((bank.bankCode + " - " + bank.name), bank.id));
+                }
+            });
+
+            $.map(banks, function (bank) {
+                if (bank.active) {
+                    $('#selEditBank').append(new Option((bank.bankCode + " - " + bank.name), bank.id));
+                }
+            });
+
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            var err = textStatus + " (GetAllBanks) ," + errorThrown;
+            mountMsg("danger", "Erro", err);
+        });
+
+        $.getJSON("/Owner/GetAllOwners", function (owners) {
+            
+            $.map(owners, function (owner) {
+                if (owner.active) {
+                    $('#selNewOwner').append(new Option(owner.ownerName, owner.id));
+                }
+            });
+
+            $.map(owners, function (owner) {
+                if (owner.active) {
+                    $('#selEditOwner').append(new Option(owner.ownerName, owner.id));
+                }
+            });
+
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            var err = textStatus + " (GetAllOwners) ," + errorThrown;
+            mountMsg("danger", "Erro", err);
+        });        
+    }
 
     $('#formEditData').on('submit', function (e) {
         e.preventDefault();
@@ -144,14 +212,19 @@
         $("#dvAlert").empty();
         $('#editData').modal();
         $('#editButton').html('<input type="submit" class="btn btn-warning" value="Atualizar">');
+
+        console.log("EditModal(id) " + id);
         $('#idEditParam').val(id);
 
         if (id > 0) {
 
-            $.getJSON("/Bank/GetBankById?BankId=" + id, function (data) {
-                $("#txtEditBankCode").val(data.bankCode);
-                $("#txtEditBankName").val(data.name);
-                $('#selEditBankActive').val(data.active === true ? 'true' :'false');
+            $.getJSON("/Account/GetAccountById?AccountId=" + id, function (data) {
+                console.log(JSON.stringify(data));
+                $('#selEditBank').val(data.bankId);
+                $("#txtEditBranchNumber").val(data.branchNumber);
+                $("#txtEditAccountNumber").val(data.accountNumber);
+                $('#selEditOwner').val(data.ownerId);
+                $('#selEditAccountActive').val(data.active === true ? 'true' : 'false');
             });
         }
     }
@@ -165,38 +238,41 @@
     function mountMsg(type, title, msg, over) {
 
         $("#dvAlert").empty();
-            
+
         var alert = "   <div class='alert alert-" + type+" alert-dismissible fade show'>"
                     + "     <strong>" + title + "!</strong> " + msg
                     + " </div>";
         $("#dvAlert").append(alert);
     }
 
-    function GetAllBanks() {
+    function GetAllAccounts() {
 
-        if ($.fn.dataTable.isDataTable('#tblBank')) {
+        if ($.fn.dataTable.isDataTable('#tblAccount')) {
 
-            $('#tblBank').DataTable().clear();
-            $('#tblBank').DataTable().destroy();
+            $('#tblAccount').DataTable().clear();
+            $('#tblAccount').DataTable().destroy();
 
         }
 
-        $.getJSON("/Bank/GetAllBanks", function (banks) {
-            $("#tblBank tbody tr").remove();
-            $.map(banks, function (bank) {
-                $("#tblBank tbody").append("<tr>"
-                    + " <td>" + bank.id + "</td>"
-                    + " <td>" + bank.bankCode + "</td>"
-                    + " <td>" + bank.name + "</td>"
-                    + " <td>" + (bank.active === true ? "Sim" : "Não") + "</td>"
+        $.getJSON("/Account/GetAllAccounts", function (Accounts) {
+
+            $("#tblAccount tbody tr").remove();
+            $.map(Accounts, function (account) {
+                $("#tblAccount tbody").append("<tr>"
+                    + " <td>" + account.bank.bankCode + "</td>"
+                    + " <td>" + account.bank.name + "</td>"
+                    + " <td>" + account.branchNumber + "</td>"
+                    + " <td>" + account.accountNumber + "</td>"                    
+                    + " <td>" + account.owner.ownerName + "</td>"
+                    + " <td>" + (account.active === true? "Sim":"Não") + "</td>"
                     + " <td>"
-                    + "     <a href='#editData' onclick='EditModal(" + bank.id + ")' class='edit' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Edit'>&#xE254;</i></a>"
-                    + "     <a href='#deleteData' onclick='DeleteModal(" + bank.id + ")' class='delete' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Delete'>&#xE872;</i></a>"
+                    + "     <a href='#editData' onclick='EditModal(" + account.id + ")' class='edit' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Edit'>&#xE254;</i></a>"
+                    + "     <a href='#deleteData' onclick='DeleteModal(" + account.id + ")' class='delete' data-toggle='modal'><i class='material-icons' data-toggle='tooltip' title='Delete'>&#xE872;</i></a>"
                     + " </td>"
                     + "</tr>");
             });
 
-            $('#tblBank').DataTable({
+            $('#tblAccount').DataTable({
                 pageLength: 5,
                 lengthMenu: [5, 10, 20, 100],
                 "language": {
@@ -403,7 +479,7 @@
                     "decimal": ","
                 }
             });
-                
+
 
         }).fail(function (jqXHR, textStatus, errorThrown) {
             var err = textStatus + " (GetAll) ," + errorThrown;
@@ -415,12 +491,12 @@
 
         if (DataId > 0) {
             $.ajax({
-                url: '/Bank/DeleteBank?BankId=' + DataId,
+                url: '/Account/DeleteAccount?AccountId=' + DataId,
                 type: 'DELETE',
                 dataType: 'json'
             }).done(function() {
                 mountMsg("success", "Sucesso", "Dado removido com sucesso!");
-                GetAllBanks();
+                GetAllAccounts();
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 var err = textStatus + " (Delete) ," + errorThrown;
                 mountMsg("danger", "Erro", err);
@@ -429,17 +505,21 @@
     }
 
     function New() {
-            
-        var oBank = {
-            BankCode: $("#txtNewBankCode").val(),
-            Name: $("#txtNewBankName").val(),
-            Active: $('select[name=selNewBankActive] option').filter(':selected').val()
+
+        var oAccount = {
+            BankId: $('select[name=selNewBank] option').filter(':selected').val(),
+            BranchNumber: $("#txtNewBranchNumber").val(),
+            AccountNumber: $("#txtNewAccountNumber").val(),
+            OwnerId: $('select[name=selNewOwner] option').filter(':selected').val(),
+            Active: $('select[name=selNewAccountActive] option').filter(':selected').val()
         };
 
+        console.log("NewAccountObject --> "+JSON.stringify(oAccount));
+
         $.ajax({
-            url: '/Bank/AddBank',
+            url: '/Account/AddAccount',
             type: 'POST',
-            data: oBank,
+            data: oAccount,
             dataType: 'json'
         }).done(function (data, textStatus, xhr) {
 
@@ -452,7 +532,7 @@
                 mountMsg("danger", "Erro", err);
             }
 
-            GetAllBanks();
+            GetAllAccounts();
 
         }).fail(function (jqXHR, textStatus, errorThrown) {
             var err = errorThrown;
@@ -465,17 +545,22 @@
 
     function Edit(DataId) {
 
-        var oBank = {
-            id: DataId,
-            BankCode: $("#txtEditBankCode").val(),
-            Name: $("#txtEditBankName").val(),
-            Active: $('select[name=selEditBankActive] option').filter(':selected').val()
+        console.log("DataId ---->>> "+JSON.stringify(oAccount));
+
+        var oAccount = {
+            BankId: $('select[name=selEditBank] option').filter(':selected').val(),
+            BranchNumber: $("#txtEditBranchNumber").val(),
+            AccountNumber: $("#txtEditAccountNumber").val(),
+            OwnerId: $('select[name=selEditOwner] option').filter(':selected').val(),
+            Active: $('select[name=selEditAccountActive] option').filter(':selected').val()
         };
 
+        console.log(JSON.stringify(oAccount));
+
         $.ajax({
-            url: '/Bank/UpdateBank?BankId=' + oBank.id,
+            url: '/Account/UpdateAccount?AccountId=' + DataId,
             type: 'PUT',
-            data: oBank,
+            data: oAccount,
             dataType: 'json'
         }).done(function (data, textStatus, xhr) {
 
@@ -488,7 +573,7 @@
                 mountMsg("danger", "Erro", err);
             }
 
-            GetAllBanks();
+            GetAllAccounts();
 
         }).fail(function (jqXHR, textStatus, errorThrown) {
             var err = errorThrown;
