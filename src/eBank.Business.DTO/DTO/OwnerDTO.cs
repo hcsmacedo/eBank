@@ -23,8 +23,6 @@ namespace eBank.Business.DTO.DTO
 			bool cpf = IsCpf(x);
 			bool cnpj = IsCnpj(x);
 
-
-			//return ValidationResult.Success;
 			return ((!cpf && !cnpj) ? new ValidationResult("Documento do Titular (CPF/CNPJ) Inválido") : ValidationResult.Success);
         }
 
