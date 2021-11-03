@@ -27,3 +27,6 @@ em (Asp.Net Core 3.1 + SQL Server) com modelagem e design da arquitetura baseado
 
 - Rodar o Projeto
 
+# Detalhes
+  - Alguns detalhes sobre o projeto estão sendo enviados em anexo por e-mail.
+
