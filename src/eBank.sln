@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F4814243-FAD3-4D99-B11A-23A0C59520F6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{0A7C041A-4F27-4A83-A40D-78BB68B42993}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.0 - Presentation", "1.0 - Presentation", "{E1C51FEC-5EC6-41FF-A43C-EE0B38D83E86}"
 EndProject
@@ -45,7 +48,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eBank.FrontEnd.Web", "eBank
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UTest", "UTest", "{94E1C166-B00E-4418-905D-FBA3105013CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eBank.Business.UnitTest", "eBank.Business.UnitTest\eBank.Business.UnitTest.csproj", "{EB299EC8-DFF5-4AAD-AF05-709D55347498}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eBank.Business.UnitTest", "eBank.Business.UnitTest\eBank.Business.UnitTest.csproj", "{EB299EC8-DFF5-4AAD-AF05-709D55347498}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

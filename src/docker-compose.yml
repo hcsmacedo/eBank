@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "dti@1406"
+      MSSQL_PID: "Express"
+    container_name: SQLEXPRESS
+    ports:
+      - 1433:1433
+    volumes:
+      - ".container-data/mssql/data:/var/opt/mssql/data"
+      - ".container-data/mssql/log:/var/opt/mssql/log"
+      - ".container-data/mssql/secrets:/var/opt/mssql/secrets"
+      - "./mssql-scripts:/var/opt/mssql/scripts"
